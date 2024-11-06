@@ -1,0 +1,184 @@
+{% extends 'base.html' %}
+{% block title %} Home{% endblock title %}
+{% block body %}
+
+  <style>
+    /* Basic Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f8f9fa;
+      color: #333;
+      line-height: 1.6;
+      padding: 20px;
+    }
+
+    /* Container Styling */
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      color: #007bff;
+    }
+
+    /* Todo Form Styling */
+    .input-field {
+      padding: 10px;
+      font-size: 1rem;
+      border: 1px solid #ced4da;
+      border-radius: 4px;
+      width: 100%;
+      margin-bottom: 15px;
+      transition: border-color 0.3s;
+    }
+
+    .input-field:focus {
+      border-color: #007bff;
+      outline: none;
+    }
+
+    .submit-btn {
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .submit-btn:hover {
+      background-color: #0056b3;
+    }
+
+    /* Todo List Table Styling */
+    #todo-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    #todo-table th, #todo-table td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    #todo-table th {
+      background-color: #007bff;
+      color: white;
+    }
+
+    #todo-table tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+    #todo-table tr:hover {
+      background-color: #f1f1f1;
+    }
+
+    .btn-action {
+      padding: 8px 16px;
+      border-radius: 4px;
+      text-decoration: none;
+      font-size: 0.9rem;
+      color: white;
+      transition: background-color 0.3s;
+    }
+
+    .btn-update {
+      background-color: #28a745;
+    }
+
+    .btn-delete {
+      background-color: #dc3545;
+    }
+
+    .btn-update:hover {
+      background-color: #218838;
+    }
+
+    .btn-delete:hover {
+      background-color: #c82333;
+    }
+
+    /* Alert Styling */
+    .alert {
+      background-color: #f8d7da;
+      padding: 15px;
+      border-radius: 4px;
+      color: #721c24;
+      font-size: 1rem;
+      margin-top: 20px;
+    }
+  </style>
+
+  <div id="todo-form-container" class="container my-3">
+    <h2>Add a Todo</h2>
+    <form action="/" method="POST">
+      <div class="form-group">
+        <label for="title" id="todo-title-label">Todo Title</label>
+        <input type="text" id="title" name="title" class="input-field" aria-describedby="emailHelp">
+      </div>
+      <div class="form-group">
+        <label for="desc" id="todo-desc-label">Todo Description</label>
+        <input type="text" id="desc" name="desc" class="input-field">
+      </div>
+      <button type="submit" id="submit-btn" class="submit-btn">Submit</button>
+    </form>
+  </div>
+
+  <div id="todo-list-container" class="container my-3">
+    <h2>Your Todos</h2>
+
+    {% if allTodo|length == 0 %}
+      <div id="no-todo-alert" class="alert">
+        No Todos found. Add your first todo now!
+      </div>
+    {% else %}
+      <table id="todo-table">
+        <thead>
+          <tr>
+            <th scope="col">SNo</th>
+            <th scope="col">Title</th>
+            <th scope="col">Description</th>
+            <th scope="col">Time</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for todo in allTodo %}
+          <tr>
+            <th scope="row">{{loop.index}}</th>
+            <td>{{todo.title}}</td>
+            <td>{{todo.desc}}</td>
+            <td>{{todo.date_created}}</td>
+            <td>
+              <a href="/update/{{todo.sno}}" class="btn-action btn-update">Update</a>
+              <a href="/delete/{{todo.sno}}" class="btn-action btn-delete">Delete</a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% endif %}
+  </div>
+
+  <script>
+    // You can add any custom JavaScript here if needed
+  </script>
+
+{% endblock body %}

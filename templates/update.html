@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% block title %} Update Todo{% endblock title %}
+{% block body %}
+
+  <style>
+    /* Basic Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f8f9fa;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    /* Form Styling */
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .input-field {
+      padding: 10px;
+      font-size: 1rem;
+      border: 1px solid #ced4da;
+      border-radius: 4px;
+      width: 100%;
+      transition: border-color 0.3s ease;
+    }
+
+    .input-field:focus {
+      border-color: #007bff;
+      outline: none;
+    }
+
+    .submit-btn {
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .submit-btn:hover {
+      background-color: #0056b3;
+    }
+
+    /* Container Styling */
+    .container {
+      max-width: 600px;
+      margin: 50px auto;
+      padding: 20px;
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      color: #007bff;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    /* Alert Styling */
+    .alert {
+      background-color: #f8d7da;
+      padding: 10px;
+      border-radius: 4px;
+      color: #721c24;
+      font-size: 1rem;
+      margin-top: 10px;
+    }
+  </style>
+
+  <div id="todo-form-container" class="container my-3">
+    <h2>Update Todo</h2>
+    <form action="/update/{{todo.sno}}" method="POST">
+      <div class="form-group">
+        <label for="title" id="todo-title-label">Todo Title</label>
+        <input type="text" id="title" name="title" class="input-field" value="{{todo.title}}" aria-describedby="emailHelp">
+      </div>
+      <div class="form-group">
+        <label for="desc" id="todo-desc-label">Todo Description</label>
+        <input type="text" id="desc" name="desc" class="input-field" value="{{todo.desc}}">
+      </div>
+      
+      <button type="submit" id="submit-btn" class="submit-btn">Update</button>
+    </form>
+  </div>
+
+{% endblock body %}
