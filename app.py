@@ -19,41 +19,29 @@ class Todo(db.Model):
 
 @app.route('/', methods=['GET', 'POST'])
 def create():
-    if request.method=='POST':
-        title = request.form['title']
-        desc = request.form['desc']
-        todo = Todo(title=title, desc=desc)
+    if request.method == 'POST':
+        todo = Todo(title=request.form['title'], desc=request.form['desc'])
         db.session.add(todo)
         db.session.commit()
-        
-    allTodo = Todo.query.all() 
-    return render_template('index.html', allTodo=allTodo)
+    return render_template('index.html', allTodo=Todo.query.all())
 
 @app.route('/show')
 def read():
-    allTodo = Todo.query.all()
-    print(allTodo)
     return 'this is products page'
 
 @app.route('/update/<int:sno>', methods=['GET', 'POST'])
 def update(sno):
-    if request.method=='POST':
-        title = request.form['title']
-        desc = request.form['desc']
-        todo = Todo.query.filter_by(sno=sno).first()
-        todo.title = title
-        todo.desc = desc
-        db.session.add(todo)
+    todo = Todo.query.get_or_404(sno)
+    if request.method == 'POST':
+        todo.title = request.form['title']
+        todo.desc = request.form['desc']
         db.session.commit()
         return redirect("/")
-        
-    todo = Todo.query.filter_by(sno=sno).first()
     return render_template('update.html', todo=todo)
 
 @app.route('/delete/<int:sno>')
 def delete(sno):
-    todo = Todo.query.filter_by(sno=sno).first()
-    db.session.delete(todo)
+    db.session.delete(Todo.query.get_or_404(sno))
     db.session.commit()
     return redirect("/")
 
